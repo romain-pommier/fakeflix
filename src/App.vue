@@ -1,32 +1,61 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <div class="container">
+    <img class=" rounded mx-auto d-block mt-5 mb-5 " src="../src/assets/title.png">
+      <div class="d-flex justify-content-start pl-5" id="nav">
+        <router-link class="mr-5" :to="{name: 'Home'}">Accueil</router-link>
+        <router-link class="mr-5" :to="{name: 'Favoris'}">Favoris</router-link>
+        <router-link class="mr-5" :to="{name: 'MovieToSee'}">Films à voir</router-link>
+        <div class=" d-flex ml-auto">
+          <input placeholder="Rechercher" class="form-control" type="text" name="search" id="" style="border-radius: 3px 0 0 3px">
+          <button type="submit" style="border-radius: 0 3px 3px 0 " class="btn btn-primary" >Rechercher</button>
+        </div>
+      </div>
+      <router-view />
+  </div>  
 </template>
+<script>
+
+export default {
+  name: 'App',
+  data:function(){
+    return{
+    }
+  },                                             
+  created:function(){
+    
+  }
+}
+</script>
+
 
 <style>
+*{
+  color: white;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: white;
+}
+h1{
+  color:red;
+  text-transform: capitalize;
+  font-size: 100px
 }
 
 #nav {
   padding: 30px;
+  background-color: #333940;
 }
 
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: white;
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: red;
 }
 </style>

@@ -5,7 +5,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import FilmList from '@/components/FilmList.vue'
 import getData from '@/mixins/fetchers.js'
 
@@ -14,27 +13,25 @@ export default {
   data:function(){
     return{
       datas: null,
-      baseRoute:"https://api.themoviedb.org/3/",
-      apiKey:"?api_key=a0cad519d1cc21ef19d3f29bbc58c5d0&language=fr",
-      moviesRoute:"discover/movie",
-      filmRoute:"movie/475303",
-      searchWord: null, 
+     
     }
   },
 
   props:{
+    searchWord: ""
   },
-// https://api.themoviedb.org/3/search/movie?api_key=a0cad519d1cc21ef19d3f29bbc58c5d0&language=en-US&query=termin
+
   mixins:[getData],
   created:function(){
-    this.getData("https://api.themoviedb.org/3/"+this.moviesRoute+"?api_key=a0cad519d1cc21ef19d3f29bbc58c5d0&language=fr")
+    this.datas = this.getData("discover/movie")
       .then(data => {
         this.datas = data
+        console.log(this.datas)
       }); 
   },
   methods:{
       getDataWithWord:function(){
-      this.getData("https://api.themoviedb.org/3/search/movie?api_key=a0cad519d1cc21ef19d3f29bbc58c5d0&language=en-US&query=termin")
+      this.getData("search/movie"+this.searchWord)
         .then(data => {
         this.datas = data
       }); 

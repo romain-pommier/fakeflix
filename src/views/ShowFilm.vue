@@ -42,10 +42,13 @@ export default {
       posterFilm: null,
       baFilm: null,
       youtubeUrl: "https://www.youtube.com/embed/",
+      movieRoute:"movie/",
+      videoRoute:"/videos"
 
 
     }
   },
+  
   computed: {
     littleTitle: function(){
         return this.dataFilm.title+" langue: (" + this.dataFilm.original_language+")"+ " -Sortie- " +this.dataFilm.release_date
@@ -58,17 +61,23 @@ export default {
   },
   mixins:[getData],
   created:function(){
-    this.datas = this.getData("https://api.themoviedb.org/3/movie/"+this.movieId+"?api_key=a0cad519d1cc21ef19d3f29bbc58c5d0&language=fr-FR")
+    console.log(this)
+    this.datas = this.getData("movie/"+this.movieId)
       .then(data => {
         this.dataFilm = data
         this.posterFilm = this.dataFilm.poster_path
       })
 
-      this.datas = this.getData("https://api.themoviedb.org/3/movie/"+this.movieId+"/videos?api_key=a0cad519d1cc21ef19d3f29bbc58c5d0&language=fr-FR")
+    this.datas = this.getData("movie/"+this.movieId+"/videos")
       .then(data => {
         this.baFilm = data
       })
-  } 
+
+  },
+  methods:{
+
+      
+  }
 }
   
 

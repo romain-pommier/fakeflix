@@ -6,11 +6,11 @@
         <router-link class="mr-5" :to="{name: 'Favoris'}">Favoris</router-link>
         <router-link class="mr-5" :to="{name: 'MovieToSee'}">Films à voir</router-link>
         <div class=" d-flex ml-auto">
-          <input placeholder="Rechercher" class="form-control" type="text" name="search" id="" style="border-radius: 3px 0 0 3px">
+          <input v-model="searchWord" v-bind:placeholder="searchWord"  class="form-control" type="text" name="search" id="" style="border-radius: 3px 0 0 3px">
           <button type="submit" style="border-radius: 0 3px 3px 0 " class="btn btn-primary" >Rechercher</button>
         </div>
       </div>
-      <router-view />
+      <router-view v-bind:searchWord="searchWord"/>
   </div>  
 </template>
 <script>
@@ -19,6 +19,7 @@ export default {
   name: 'App',
   data:function(){
     return{
+      searchWord: "Recherche",
     }
   },                                             
   created:function(){

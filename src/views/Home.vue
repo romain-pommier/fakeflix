@@ -13,7 +13,6 @@ export default {
   data:function(){
     return{
       datas: null,
-     
     }
   },
 
@@ -31,7 +30,6 @@ export default {
   
   },
   updated:function(){
-    console.log(this.$parent.searchWord)
   },
   methods:{
       getDataWithWord:function(){
@@ -42,7 +40,6 @@ export default {
 
       },
   },
-
   components: {
     FilmList
   }

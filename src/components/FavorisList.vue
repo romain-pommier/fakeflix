@@ -9,7 +9,6 @@ export default {
   name: 'favorisList'
 }
 </script>
-
 <style scoped>
 
 </style>

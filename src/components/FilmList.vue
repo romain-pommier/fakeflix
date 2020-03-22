@@ -20,13 +20,11 @@ export default {
     return{
       baseImg:"https://image.tmdb.org/t/p/w300",
       pathFilm:"/show/"
-    }
-    
+    } 
   },
   components:{
   },
   created:function(){
-    console.log(this.$parent.$parent.searchWord)
   },
 }
 </script>

@@ -2,8 +2,8 @@
   <div class="row mt-5 ">
      <div class="col-md-4 mb-4" v-for="films in datasFilm" v-bind:key="films.id"  >
       <a v-bind:href="pathFilm+films.id">
-      <img class="rounded mx-auto d-block" v-bind:src="baseImg+films.poster_path" alt="">
-      <h4 class="text-center">{{films.title}}</h4>
+        <img class="rounded mx-auto d-block" v-bind:src="baseImg+films.poster_path" alt="">
+        <h4 class="text-center">{{films.title}}</h4>
       </a>
     </div>
   </div>
@@ -24,7 +24,10 @@ export default {
     
   },
   components:{
-  }
+  },
+  created:function(){
+    console.log(this.$parent.$parent.searchWord)
+  },
 }
 </script>
 

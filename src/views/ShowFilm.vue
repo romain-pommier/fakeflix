@@ -61,7 +61,6 @@ export default {
   },
   mixins:[getData],
   created:function(){
-    console.log(this)
     this.datas = this.getData("movie/"+this.movieId)
       .then(data => {
         this.dataFilm = data

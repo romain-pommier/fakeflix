@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import FilmList from '@/components/FilmList.vue'
-import getData from '@/mixins/fetchers.js'
+import FilmList from '../components/FilmList.vue'
+import getData from '../mixins/fetchers.js'
 
 export default {
   name: 'Home',
@@ -18,7 +18,7 @@ export default {
   },
 
   props:{
-    searchWord: ""
+    searchWordProps: ""
   },
 
   mixins:[getData],
@@ -26,8 +26,12 @@ export default {
     this.datas = this.getData("discover/movie")
       .then(data => {
         this.datas = data
-        console.log(this.datas)
-      }); 
+      });
+    
+  
+  },
+  updated:function(){
+    console.log(this.$parent.searchWord)
   },
   methods:{
       getDataWithWord:function(){

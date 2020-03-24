@@ -1,6 +1,7 @@
 <template>
   <div>
     <FilmList v-bind:datasFilm="datas.results"/>
+    <p>{{formObjectProps.value}}</p>
   </div>
 </template>
 
@@ -15,30 +16,36 @@ export default {
       datas: null,
     }
   },
-
   props:{
-    searchWordProps: ""
+    formObjectProps: null
   },
-
   mixins:[getData],
   created:function(){
-    this.datas = this.getData("discover/movie")
+    this.datas = this.getData("discover/movie","")
       .then(data => {
         this.datas = data
       });
-    
-  
   },
   updated:function(){
+    if(this.formObjectProps.status != false && this.formObjectProps.value != ""){
+      this.getDataWithWord("&query=" + this.formObjectProps.value)
+      this.formObjectProps.status = false
+      console.log('up')
+    }
   },
   methods:{
-      getDataWithWord:function(){
-      this.getData("search/movie"+this.searchWord)
-        .then(data => {
-        this.datas = data
-      }); 
-
+      getDataWithWord:function(query){
+        this.getData("search/movie", query)
+          .then(data => {
+            this.datas = data
+        }); 
       },
+      getDefaultData:function(){
+        this.getData("discover/movie","")
+          .then(data => {
+            this.datas = data
+        });
+      }
   },
   components: {
     FilmList

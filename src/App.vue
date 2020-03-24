@@ -5,12 +5,12 @@
         <router-link class="mr-5" :to="{name: 'Home'}">Accueil</router-link>
         <router-link class="mr-5" :to="{name: 'Favoris'}">Favoris</router-link>
         <router-link class="mr-5" :to="{name: 'MovieToSee'}">Films à voir</router-link>
-        <div class=" d-flex ml-auto" v-on:keyup.enter="submit" >
+        <form class=" d-flex ml-auto" @submit="submit" >
           <input placeholder="Recherche"  v-model="searchWord" class="form-control"  style="border-radius: 3px 0 0 3px">
           <button type="submit" style="border-radius: 0 3px 3px 0 "    class="btn btn-primary" >Rechercher</button>
-        </div>
+        </form>
       </div>
-      <router-view v-bind:searchWordProps="searchWord" />
+      <router-view v-bind:formObjectProps="formObject" />
   </div>  
 </template>
 <script>
@@ -20,18 +20,23 @@ export default {
   data:function(){
     return{
      searchWord: null,
+     formObject:{
+       value: null,
+       status: false
+     },
     }
   },                                            
   created:function(){
   },
   methods:{
     submit:function(){
-      console.log('here')
+      event.preventDefault()
+      this.formObject = new Object
+      this.formObject.value = this.searchWord
+      this.formObject.status = true
     }
   },
   mounted:function(){
-    console.log('mounted')
-
   }
 }
 </script>

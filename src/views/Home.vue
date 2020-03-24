@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <FilmList v-bind:datasFilm="datas.results"/>
-    <p>{{formObjectProps.value}}</p>
+  <div >
+    <FilmList v-bind:datasFilm="datas" v-bind:formObject="formObjectProps.value"/>
   </div>
 </template>
 
@@ -23,29 +22,22 @@ export default {
   created:function(){
     this.datas = this.getData("discover/movie","")
       .then(data => {
-        this.datas = data
+        this.datas = data.results
       });
   },
   updated:function(){
-    if(this.formObjectProps.status != false && this.formObjectProps.value != ""){
+    if(this.formObjectProps.status == true && this.formObjectProps.value != null  ){
       this.getDataWithWord("&query=" + this.formObjectProps.value)
       this.formObjectProps.status = false
-      console.log('up')
     }
   },
   methods:{
       getDataWithWord:function(query){
         this.getData("search/movie", query)
           .then(data => {
-            this.datas = data
+            this.datas = data.results
         }); 
       },
-      getDefaultData:function(){
-        this.getData("discover/movie","")
-          .then(data => {
-            this.datas = data
-        });
-      }
   },
   components: {
     FilmList

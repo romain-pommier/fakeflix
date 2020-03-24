@@ -32,7 +32,8 @@ export default {
     submit:function(){
       event.preventDefault()
       this.formObject = new Object
-      this.formObject.value = this.searchWord
+      this.formObject.value = this.searchWord != "" ? this.searchWord : null
+      
       this.formObject.status = true
     }
   },

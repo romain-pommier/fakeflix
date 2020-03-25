@@ -1,18 +1,27 @@
 <template>
-  <div >
-    <FilmList v-bind:datasFilm="datas" v-bind:formObject="formObjectProps.value"/>
+  <div>
+    <div class="float-right  mx-sm-auto mr-md-5 " style="width:250px">
+      <h3 class="text-center">A la une.</h3>
+     <Carousel class="" v-bind:datasCarousel="defaultDatas"></Carousel>
+    </div>
+    <div class=" mt-5" >
+      <FilmList v-bind:datasFilm="datas" v-bind:formObject="formObjectProps.value"/>
+    </div>
   </div>
 </template>
 
 <script>
+import Carousel from '../components/Carousel.vue'
 import FilmList from '../components/FilmList.vue'
 import getData from '../mixins/fetchers.js'
+
 
 export default {
   name: 'Home',
   data:function(){
     return{
-      datas: null,
+      defaultDatas: null,
+      datas:null
     }
   },
   props:{
@@ -20,9 +29,9 @@ export default {
   },
   mixins:[getData],
   created:function(){
-    this.datas = this.getData("discover/movie","")
+    this.defaultDatas = this.getData("discover/movie","")
       .then(data => {
-        this.datas = data.results
+        this.defaultDatas = data.results
       });
   },
   updated:function(){
@@ -40,7 +49,8 @@ export default {
       },
   },
   components: {
-    FilmList
+    FilmList,
+    Carousel 
   }
 }
 </script>

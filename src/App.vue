@@ -1,6 +1,7 @@
 <template>
-  <div class="container">
-    <img class=" rounded mx-auto d-block mt-5 mb-5 " src="../src/assets/title.png">
+  <div class="container-fluid">
+    <div class="container">
+      <img class=" rounded mx-auto d-block mt-5 mb-5 " src="../src/assets/title.png">
       <div class="d-flex justify-content-start pl-5" id="nav">
         <router-link class="mr-5" :to="{name: 'Home'}">Accueil</router-link>
         <router-link class="mr-5" :to="{name: 'Favoris'}">Favoris</router-link>
@@ -10,9 +11,12 @@
           <button type="submit" style="border-radius: 0 3px 3px 0 "    class="btn btn-primary" >Rechercher</button>
         </form>
       </div>
-      <router-view v-bind:formObjectProps="formObject" />
-  </div>  
+    </div> 
+    <router-view v-bind:formObjectProps="formObject" /> 
+  </div>
 </template>
+
+ 
 <script>
 
 export default {
@@ -33,7 +37,6 @@ export default {
       event.preventDefault()
       this.formObject = new Object
       this.formObject.value = this.searchWord != "" ? this.searchWord : null
-      
       this.formObject.status = true
     }
   },

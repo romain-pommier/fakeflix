@@ -1,5 +1,5 @@
 <template>
- <div class="mt-5 mb-5" v-if="dataFilm != null">
+ <div class="mt-5 mb-5 container" v-if="dataFilm != null">
    <div class="embed-responsive embed-responsive-16by9 mb-5" v-if="this.baFilmKey != null">
     <iframe  class="embed-responsive-item" width="160%" height="315" v-bind:src="this.youtubeUrl+this.baFilmKey" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> 
    </div>

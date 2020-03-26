@@ -1,29 +1,39 @@
 <template>
-  <div class="container-fluid">
     <div class="container">
       <img class=" rounded mx-auto d-block mt-5 mb-5 " src="../src/assets/title.png">
-      <div class="d-flex justify-content-start pl-5" id="nav">
-        <router-link class="mr-5" :to="{name: 'Home'}">Accueil</router-link>
-        <router-link class="mr-5" :to="{name: 'Favoris'}">Favoris</router-link>
-        <router-link class="mr-5" :to="{name: 'MovieToSee'}">Films à voir</router-link>
-        <form class=" d-flex ml-auto" @submit="submit" >
-          <input placeholder="Recherche"  v-model="searchWord" class="form-control"  style="border-radius: 3px 0 0 3px">
-          <button type="submit" style="border-radius: 0 3px 3px 0 "    class="btn btn-primary" >Rechercher</button>
-        </form>
+      <div v-if="session == true">
+        <div class="d-flex justify-content-start pl-5" id="nav" >
+          <router-link class="mr-5" :to="{name: 'Home'}">Accueil</router-link>
+          <router-link class="mr-5" :to="{name: 'Favoris'}">Favoris</router-link>
+          <router-link class="mr-5" :to="{name: 'MovieToSee'}">Films à voir</router-link>
+          <form class=" d-flex ml-auto" @submit="submit" >
+            <input placeholder="Recherche"  v-model="searchWord" class="form-control"  style="border-radius: 3px 0 0 3px">
+            <button type="submit" style="border-radius: 0 3px 3px 0 "    class="btn btn-primary" >Rechercher</button>
+          </form>
+        </div>
+        <router-view  v-bind:formObjectProps="formObject" /> 
       </div>
+      <div v-else>
+        <login></login>
+      </div>
+      <footer class="fixed-bottom">
+        <p class="text-center ">
+          Fakeflix ©2020 - Powered by 
+          <a href="https://www.themoviedb.org/">themoviedb.org</a>
+        </p>
+      </footer>
     </div> 
-    <router-view v-bind:formObjectProps="formObject" /> 
-  </div>
 </template>
 
- 
 <script>
+import Login from './views/Login.vue'
 
 export default {
   name: 'App',
   data:function(){
     return{
      searchWord: null,
+     session: false,
      formObject:{
        value: null,
        status: false
@@ -39,6 +49,9 @@ export default {
       this.formObject.value = this.searchWord != "" ? this.searchWord : null
       this.formObject.status = true
     }
+  },
+  components:{
+    Login
   },
   mounted:function(){
   }

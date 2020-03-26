@@ -2,10 +2,11 @@
    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
         <div v-for="(data, index) in datasCarousel" v-bind:key="data.id" :class="{ 'active': index === 0 }" class="carousel-item ">
-            <a v-bind:href="pathFilm + data.id">
+            <router-link :to="{ name: 'Show', params: { id: data.id }}">
                 <img class=" rounded mx-auto d-block" v-if="data.poster_path != null" v-bind:src="baseImg+data.poster_path" alt="">
                 <img v-else v-bind:src="defaultImg" alt="" >
-            </a>
+            </router-link>
+            <router-view></router-view>
         </div>
     </div>
     <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">

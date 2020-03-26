@@ -1,13 +1,19 @@
 <template>
-  <div>
-    <div class="float-right  mx-sm-auto mr-md-5 " style="width:250px">
+<div>
+  <div  v-if="formObjectProps.value != null">
+    <div class=" float-right  mx-sm-auto  " style="width:200px">
       <h3 class="text-center">A la une.</h3>
-     <Carousel class="" v-bind:datasCarousel="defaultDatas"></Carousel>
+     <Carousel  v-bind:datasCarousel="defaultDatas"></Carousel>
     </div>
     <div class=" mt-5" >
-      <FilmList v-bind:datasFilm="datas" v-bind:formObject="formObjectProps.value"/>
+      <FilmList v-bind:datasFilm="{datas: datas, searchWord: formObjectProps.value}" />
     </div>
   </div>
+  <div  class="mt-5">
+    <h3  class=" mx-auto text-center">Bienvenue sur FakeFlix </h3>
+  </div>
+</div>
+  
 </template>
 
 <script>
@@ -15,13 +21,13 @@ import Carousel from '../components/Carousel.vue'
 import FilmList from '../components/FilmList.vue'
 import getData from '../mixins/fetchers.js'
 
-
 export default {
   name: 'Home',
   data:function(){
     return{
       defaultDatas: null,
-      datas:null
+      datas:null,
+      requestStatus:false
     }
   },
   props:{
@@ -32,17 +38,18 @@ export default {
     this.defaultDatas = this.getData("discover/movie","")
       .then(data => {
         this.defaultDatas = data.results
-      });
+      });  
   },
   updated:function(){
-    if(this.formObjectProps.status == true && this.formObjectProps.value != null  ){
-      this.getDataWithWord("&query=" + this.formObjectProps.value)
-      this.formObjectProps.status = false
+    if(this.requestStatus == false){
+      this.getDataWithWord(this.formObjectProps.value)
+      this.requestStatus = true
     }
+    
   },
   methods:{
       getDataWithWord:function(query){
-        this.getData("search/movie", query)
+        this.getData("search/movie", "&query=" + query)
           .then(data => {
             this.datas = data.results
         }); 

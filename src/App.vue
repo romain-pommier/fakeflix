@@ -3,20 +3,19 @@
       <img class=" rounded mx-auto d-block mt-5 mb-5 " src="../src/assets/title.png">
       <div v-if="session == true">
         <div class="d-flex justify-content-start pl-5" id="nav" >
-          <router-link class="mr-5" :to="{name: 'Home'}">Accueil</router-link>
+          <router-link ref="homePage"class="mr-5" :to="{name: 'Home'}">Accueil</router-link>
           <router-link class="mr-5" :to="{name: 'Favoris'}">Favoris</router-link>
           <router-link class="mr-5" :to="{name: 'MovieToSee'}">Films à voir</router-link>
-          <form class=" d-flex ml-auto" @submit="submit" >
-            <input placeholder="Recherche"  v-model="searchWord" class="form-control"  style="border-radius: 3px 0 0 3px">
-            <button type="submit" style="border-radius: 0 3px 3px 0 "    class="btn btn-primary" >Rechercher</button>
-          </form>
+          <input placeholder="Recherche" @keyup.enter="getSearchWord"  v-model="searchWord" class="form-control justify-content-end"  style="border-radius: 3px 0 0 3px ; width: 200px">
+          <button type="submit" style="border-radius: 0 3px 3px 0 "  class="btn btn-primary" >Rechercher</button>
+          
         </div>
-        <router-view  v-bind:formObjectProps="formObject" /> 
+        <router-view  v-bind:searchWord="formData" /> 
       </div>
       <div v-else>
         <login></login>
       </div>
-      <footer class="fixed-bottom">
+      <footer class="sticky-bottom mt-5">
         <p class="text-center ">
           Fakeflix ©2020 - Powered by 
           <a href="https://www.themoviedb.org/">themoviedb.org</a>
@@ -34,21 +33,17 @@ export default {
     return{
      searchWord: null,
      session: false,
-     formObject:{
-       value: null,
-       status: false
-     },
+     formData: null,
     }
   },                                            
   created:function(){
   },
   methods:{
-    submit:function(){
-      event.preventDefault()
-      this.formObject = new Object
-      this.formObject.value = this.searchWord != "" ? this.searchWord : null
-      this.formObject.status = true
-    }
+    getSearchWord:function(){
+      this.$refs.homePage.$el.click()
+      this.formData = this.searchWord != "" ? this.searchWord : null
+    },
+    
   },
   components:{
     Login

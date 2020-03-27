@@ -32,23 +32,11 @@ export default {
   created:function(){
     this.getAuthenticationToken()
   },
-  updated:function(){
-   
-    
-  },
   methods:{
     login:function(){
       event.preventDefault()
       this.getUserToken()
-      if(this.userToken.request_token ){
-        console.log('here')
-        this.getUserSession()
-      }
       
-      
-      if(this.userSession.success ){
-       this.$parent.session = true
-      }
     },
 
     getAuthenticationToken: function(){
@@ -74,11 +62,11 @@ export default {
       })
       .then(response => response.json())
         .then(json => {
-          this.userToken = json;
+          this.userToken = json
+          this.getUserSession()
       });
     },
     getUserSession: function(){
-      console.log(this.userToken.request_token)
       let apiKey = "a0cad519d1cc21ef19d3f29bbc58c5d0"
       fetch("https://api.themoviedb.org/3/authentication/session/new?api_key="+ apiKey,{
         headers: {
@@ -91,8 +79,8 @@ export default {
       })
       .then(response => response.json())
         .then(json => {
-          this.userSession = json;
-          console.log(json)
+          this.userSession = json
+          this.$parent.session = true
       });
     },
   }

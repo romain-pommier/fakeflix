@@ -1,14 +1,14 @@
 <template>
  <div class="mt-5 mb-5 container" v-if="dataFilm != null">
    <div class="embed-responsive embed-responsive-16by9 mb-5" v-if="this.baFilmKey != null">
-    <iframe  class="embed-responsive-item" width="160%" height="315" v-bind:src="this.youtubeUrl+this.baFilmKey" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> 
+    <iframe  class="embed-responsive-item" width="160%" height="315" :src="this.youtubeUrl+this.baFilmKey" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> 
    </div>
    <div v-else>
       <p>Video d'annonce non disponible</p>
    </div>
    <div class="row">
-    <img  class="col-md-4" v-if="posterFilm != null" v-bind:src="baseImg+posterFilm" alt="">
-    <img  class="col-md-4" v-else v-bind:src="this.defaultImg" alt="">
+    <img  class="col-md-4" v-if="posterFilm != null" :src="baseImg+posterFilm" alt="">
+    <img  class="col-md-4" v-else :src="this.defaultImg" alt="">
     
     <div class="col-md-8">
       <h2>{{ dataFilm.title }}</h2>

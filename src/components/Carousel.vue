@@ -1,5 +1,5 @@
 <template>
-   <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+   <div v-if="datasCarousel != null" id="carouselExampleControls" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
         <div v-for="(data, index) in datasCarousel" v-bind:key="data.id" :class="{ 'active': index === 0 }" class="carousel-item ">
             <router-link :to="{ name: 'Show', params: { id: data.id }}">

@@ -1,9 +1,9 @@
 <template>
-    <div class=" d-flex flex-wrap  mt-5 ">
-      <div class="container col-md-4 mb-4 col-sm-6" style="max-width:100%"  v-for="films in datasFilm.datas" v-bind:key="films.id"   >
+    <div  class=" d-flex flex-wrap  mt-5 ">
+      <div class="container col-md-4 mb-4 col-sm-6" style="max-width:100%"  v-for="films in datasFilm.datas" :key="films.id"   >
         <router-link :to="{ name: 'Show', params: { id: films.id }}">
-            <img class="rounded mx-auto d-block" v-if="films.poster_path != null" v-bind:src="baseImg+films.poster_path" alt="">
-            <img class="rounded mx-auto d-block" v-else v-bind:src="defaultImg" alt="">
+            <img class="rounded mx-auto d-block" v-if="films.poster_path != null" :src="baseImg+films.poster_path" alt="">
+            <img class="rounded mx-auto d-block" v-else :src="defaultImg" alt="">
             <h4 class="text-center">{{films.title}}</h4>
         </router-link>
         <router-view ></router-view> 

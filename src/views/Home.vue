@@ -1,19 +1,18 @@
 <template>
-<div>
-  <div  v-if="formObjectProps.value != null">
-    <div class=" float-right  mx-sm-auto  " style="width:200px">
-      <h3 class="text-center">A la une.</h3>
-     <Carousel  v-bind:datasCarousel="defaultDatas"></Carousel>
+  <div>
+    <div v-if='this.searchWord != null'>
+      <div  class=" float-right  mx-sm-auto  " style="width:200px">
+        <h3 class="text-center">A la une.</h3>
+      <Carousel v-if="defaultDatas != null" :datasCarousel="defaultDatas"></Carousel>
+      </div>
+      <div  v-if="searchWord != null" class=" mt-5" >
+        <FilmList :datasFilm="{datas: datas, searchWord: searchWord}" />
+      </div>
     </div>
-    <div class=" mt-5" >
-      <FilmList v-bind:datasFilm="{datas: datas, searchWord: formObjectProps.value}" />
+    <div v-else class="mt-5">
+      <h3  class=" mx-auto text-center">Bienvenue sur FakeFlix </h3>
     </div>
   </div>
-  <div  class="mt-5">
-    <h3  class=" mx-auto text-center">Bienvenue sur FakeFlix </h3>
-  </div>
-</div>
-  
 </template>
 
 <script>
@@ -27,29 +26,27 @@ export default {
     return{
       defaultDatas: null,
       datas:null,
-      requestStatus:false
     }
   },
   props:{
-    formObjectProps: null
+    searchWord: null
   },
   mixins:[getData],
   created:function(){
     this.defaultDatas = this.getData("discover/movie","")
       .then(data => {
         this.defaultDatas = data.results
-      });  
+      });
+      this.getDataWithWord()
   },
-  updated:function(){
-    if(this.requestStatus == false){
-      this.getDataWithWord(this.formObjectProps.value)
-      this.requestStatus = true
+  watch: {
+    searchWord:function(){
+      this.getDataWithWord()
     }
-    
   },
   methods:{
-      getDataWithWord:function(query){
-        this.getData("search/movie", "&query=" + query)
+      getDataWithWord:function(){
+        this.getData("search/movie", "&query=" + this.searchWord)
           .then(data => {
             this.datas = data.results
         }); 

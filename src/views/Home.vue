@@ -6,11 +6,15 @@
       <Carousel v-if="defaultDatas != null" :datasCarousel="defaultDatas"></Carousel>
       </div>
       <div  v-if="searchWord != null" class=" mt-5" >
-        <FilmList :datasFilm="{datas: datas, searchWord: searchWord}" />
+        <FilmList :datasFilm ="datas"  />
       </div>
     </div>
     <div v-else class="mt-5">
       <h3  class=" mx-auto text-center">Bienvenue sur FakeFlix </h3>
+      <div  class=" float-right  mx-sm-auto  " style="width:200px">
+        <h3 class="text-center">A la une.</h3>
+      <Carousel v-if="defaultDatas != null" :datasCarousel="defaultDatas"></Carousel>
+      </div>
     </div>
   </div>
 </template>
@@ -26,6 +30,7 @@ export default {
     return{
       defaultDatas: null,
       datas:null,
+      sessionId: null
     }
   },
   props:{

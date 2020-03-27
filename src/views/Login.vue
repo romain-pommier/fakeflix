@@ -1,7 +1,6 @@
 <template>
   <div class="mx-auto mt-5" style="width:30%">
       <h2>Veuillez vous identifier</h2>
-      <form action="">
         <div class="form-group">
         <input class="form-control" v-model="username" type="text" placeholder="Nom d'utilisateur" required>
       </div>
@@ -11,7 +10,6 @@
       <div class="form-group">
         <button class="btn btn-primary form-control" @click="login">Connecter</button>
       </div>
-      </form>
   </div>
 </template>
 <script>
@@ -24,9 +22,20 @@ export default {
     return{
       username: null,
       password: null,
-      authenticationData: null,
-      userToken:null,
-      userSession: null
+    }
+  },
+  computed:{
+    session(){
+      return this.$store.state.session
+    },
+    authenticationData(){
+      return this.$store.state.authenticationData
+    },
+    userData(){
+      return this.$store.state.userData
+    },
+    apiKey(){
+       return this.$store.state.apiKey
     }
   },
   created:function(){
@@ -34,22 +43,19 @@ export default {
   },
   methods:{
     login:function(){
-      event.preventDefault()
       this.getUserToken()
       
     },
 
     getAuthenticationToken: function(){
-      let apiKey = "a0cad519d1cc21ef19d3f29bbc58c5d0"
-      fetch("https://api.themoviedb.org/3/authentication/token/new?api_key="+ apiKey)
+      fetch("https://api.themoviedb.org/3/authentication/token/new?api_key="+ this.apiKey)
                 .then(response => response.json())
                 .then(json => {
-                    this.authenticationData = json;
+                  this.$store.commit('setAuthenticationData', json)
                 });
     },
     getUserToken: function(){
-      let apiKey = "a0cad519d1cc21ef19d3f29bbc58c5d0"
-      fetch("https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key="+ apiKey,{
+      fetch("https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key="+ this.apiKey,{
         headers: {
           "Content-Type": "application/json"
         },
@@ -62,27 +68,33 @@ export default {
       })
       .then(response => response.json())
         .then(json => {
-          this.userToken = json
+           this.$store.commit('setUserData', json)
           this.getUserSession()
       });
     },
     getUserSession: function(){
-      let apiKey = "a0cad519d1cc21ef19d3f29bbc58c5d0"
-      fetch("https://api.themoviedb.org/3/authentication/session/new?api_key="+ apiKey,{
+      fetch("https://api.themoviedb.org/3/authentication/session/new?api_key="+ this.apiKey,{
         headers: {
           "Content-Type": "application/json"
         },
         method:"POST",
         body:JSON.stringify({
-          "request_token": this.userToken.request_token
+          "request_token": this.userData.request_token
         }),
       })
       .then(response => response.json())
         .then(json => {
-          this.userSession = json
-          this.$parent.session = true
+          this.$store.commit('setSession', json)
+          this.getDetailsAccount()
       });
     },
+    getDetailsAccount: function(){
+      fetch("https://api.themoviedb.org/3/account?api_key="+ this.apiKey +"&session_id=" + this.session.session_id)
+                .then(response => response.json())
+                .then(json => {
+                  this.$store.commit('setDetailsAccount', json)  
+      });
+    },    
   }
   
 }

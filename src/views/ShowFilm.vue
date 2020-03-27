@@ -23,7 +23,7 @@
     </div>
    </div>
    <div class=" mt-5 d-flex justify-content-between"> 
-     <button class="btn btn-success" >Ajouter aux favoris</button>
+     <button @click="addFavorisFilm" class="btn btn-success" >Ajouter aux favoris</button>
      <button class="btn btn-success">Ajouter à la liste "A voir"</button>
    </div>
  </div>
@@ -53,7 +53,16 @@
       },
       vote:function(){
         return this.dataFilm.vote_average+"/10"
-      }  
+      },
+      detailsAccount(){
+        return this.$store.state.detailsAccount
+      },
+      session(){
+        return this.$store.state.session
+      },
+      apiKey(){
+        return this.$store.state.apiKey
+      }
     },
     mixins:[getData],
     created:function(){
@@ -72,8 +81,34 @@
             this.baFilmKey = null
           }
         })
+
+      this.getIsFavorite()
     },
     methods:{
+      addFavorisFilm: function(){
+        fetch("https://api.themoviedb.org/3/account/"+ this.detailsAccount.id +"/favorite?api_key="+ this.apiKey + "&session_id="+ this.session.session_id, {
+          headers: {
+            "Content-Type": "application/json"
+          },
+          method:"POST",
+          body:JSON.stringify({
+            "media_type": "movie",
+            "media_id": this.dataFilm.id ,
+            "favorite": true
+          }),
+        })
+        .then(response => response.json())
+          .then(json => {
+            this.favorisDatas = json
+        });
+      },
+
+      getIsFavorite: function(){
+        this.favorisDatas.forEach(element => {
+          console.log(element)
+          
+        });
+      }
     }
   }
 </script>

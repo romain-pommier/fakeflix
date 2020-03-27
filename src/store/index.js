@@ -5,11 +5,31 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        todos: [
-            { id: "0", title: 'titre 0', completed: 0 },
-            { id: "1", title: 'titre 1', completed: 1 },
-            { id: "2", title: 'titre 2', completed: 2 },
-            { id: "3", title: 'titre 3', completed: 3 },
-        ]
+        apiKey: 'a0cad519d1cc21ef19d3f29bbc58c5d0',
+        authenticationData: null,
+        userData: null,
+        session: null,
+        detailsAccount: null,
+        favorisFilms: null
+
+    },
+    mutations: {
+        setAuthenticationData(state, authenticationData) {
+            return state.authenticationData = authenticationData
+        },
+        setUserData(state, userData) {
+            return state.userData = userData
+        },
+        setSession(state, session) {
+            return state.session = session
+        },
+        setDetailsAccount(state, detailsAccount) {
+            return state.detailsAccount = detailsAccount
+        },
+        setFavorisFilms(state, favorisFilms) {
+            return state.favorisFilms = favorisFilms
+        }
     }
+
+
 })

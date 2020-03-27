@@ -1,16 +1,19 @@
 <template>
     <div class="container">
       <img class=" rounded mx-auto d-block mt-5 mb-5 " src="../src/assets/title.png">
-      <div v-if="session == true">
-        <div class="d-flex justify-content-start pl-5" id="nav" >
-          <router-link ref="homePage"class="mr-5" :to="{name: 'Home'}">Accueil</router-link>
-          <router-link class="mr-5" :to="{name: 'Favoris'}">Favoris</router-link>
-          <router-link class="mr-5" :to="{name: 'MovieToSee'}">Films à voir</router-link>
-          <input placeholder="Recherche" @keyup.enter="getSearchWord"  v-model="searchWord" class="form-control justify-content-end"  style="border-radius: 3px 0 0 3px ; width: 200px">
-          <button type="submit" style="border-radius: 0 3px 3px 0 "  class="btn btn-primary" >Rechercher</button>
-          
+      <div v-if="this.detailsAccount != null">
+        <div class="row pl-5" id="nav" >
+          <div class="col-md-6 mr-auto p-2">
+            <router-link class="mr-5" :to="{name: 'Home'}">Accueil</router-link>
+            <router-link class="mr-5" :to="{name: 'Favoris'}">Favoris</router-link>
+            <router-link class="mr-5" :to="{name: 'MovieToSee'}">Films à voir</router-link>
+          </div>
+          <div class="col-md-3 ">
+            <input placeholder="Recherche" @keyup.enter="getSearchWord"  v-model="searchWord" class="form-control  "  style="border-radius: 3px ;">
+          </div>
         </div>
-        <router-view  v-bind:searchWord="formData" /> 
+         
+        <router-view  :searchWord="formData" /> 
       </div>
       <div v-else>
         <login></login>
@@ -32,15 +35,24 @@ export default {
   data:function(){
     return{
      searchWord: null,
-     session: false,
      formData: null,
     }
-  },                                            
+  },
+  computed:{
+   session(){
+      return this.$store.state.session
+    },
+    detailsAccount(){
+      return this.$store.state.detailsAccount
+    },
+
+  },                                         
   created:function(){
   },
+  
   methods:{
     getSearchWord:function(){
-      this.$refs.homePage.$el.click()
+      this.$router.push('/')
       this.formData = this.searchWord != "" ? this.searchWord : null
     },
     

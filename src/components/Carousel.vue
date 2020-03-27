@@ -29,7 +29,7 @@ export default {
     return{
         baseImg:"https://image.tmdb.org/t/p/w200",
         pathFilm:"/show/",
-        defaultImg:"https://via.placeholder.com/300x450"
+        defaultImg:"https://via.placeholder.com/200x300"
     } 
   },
   components:{

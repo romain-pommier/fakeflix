@@ -55,6 +55,8 @@ export default {
                 });
     },
     getUserToken: function(){
+      
+      
       fetch("https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key="+ this.apiKey,{
         headers: {
           "Content-Type": "application/json"
@@ -67,10 +69,14 @@ export default {
         }),
       })
       .then(response => response.json())
-        .then(json => {
-           this.$store.commit('setUserData', json)
+      .then(json => {
+        if(json.success){
+          this.$store.commit('setUserData', json)
           this.getUserSession()
-      });
+        } else {
+          console.log('out')
+          }
+      })
     },
     getUserSession: function(){
       fetch("https://api.themoviedb.org/3/authentication/session/new?api_key="+ this.apiKey,{
@@ -86,6 +92,7 @@ export default {
         .then(json => {
           this.$store.commit('setSession', json)
           this.getDetailsAccount()
+          
       });
     },
     getDetailsAccount: function(){

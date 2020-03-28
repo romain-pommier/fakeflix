@@ -11,7 +11,8 @@ export default new Vuex.Store({
         session: null,
         detailsAccount: null,
         favorisFilms: null,
-        watchList: null
+        watchList: null,
+        access: false
 
     },
     mutations: {
@@ -32,6 +33,9 @@ export default new Vuex.Store({
         },
         setWatchList(state, watchList) {
             return state.watchList = watchList
+        },
+        setAccess(state, access) {
+            return state.access = access
         }
     },
     actions: {
@@ -52,8 +56,6 @@ export default new Vuex.Store({
 
                 });
         },
-
-
 
     }
 })

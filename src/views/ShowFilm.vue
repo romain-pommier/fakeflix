@@ -65,6 +65,15 @@
       watchList(){
         return this.$store.state.watchList
       },
+      session(){
+      return this.$store.state.session
+    },
+    detailsAccount(){
+      return this.$store.state.detailsAccount
+    },
+    apiKey(){
+       return this.$store.state.apiKey
+    },
     },
     watch:{
       favorisFilms:function(){

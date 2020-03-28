@@ -42,6 +42,9 @@ export default {
    session(){
       return this.$store.state.session
     },
+    userData(){
+      return this.$store.state.userData
+    },
     detailsAccount(){
       return this.$store.state.detailsAccount
     },
@@ -53,7 +56,7 @@ export default {
     },
     favorisFilms(){
       return this.$store.state.favorisFilms
-    }
+    },
 
   },                                         
   created:function(){
@@ -64,6 +67,7 @@ export default {
       this.$store.dispatch('getFavorisMovies')
       this.$store.dispatch('getWatchList')
     },  
+
   },
   
   methods:{

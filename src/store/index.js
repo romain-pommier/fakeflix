@@ -10,7 +10,8 @@ export default new Vuex.Store({
         userData: null,
         session: null,
         detailsAccount: null,
-        favorisFilms: null
+        favorisFilms: null,
+        watchList: null
 
     },
     mutations: {
@@ -28,8 +29,31 @@ export default new Vuex.Store({
         },
         setFavorisFilms(state, favorisFilms) {
             return state.favorisFilms = favorisFilms
+        },
+        setWatchList(state, watchList) {
+            return state.watchList = watchList
         }
+    },
+    actions: {
+        getFavorisMovies(context) {
+            fetch("https://api.themoviedb.org/3/account/" + context.state.detailsAccount.id + "/favorite/movies?api_key=" + context.state.apiKey + "&session_id=" + context.state.session.session_id + '&sort_by=created_at.asc')
+                .then(response => response.json())
+                .then(json => {
+                    context.state.favorisFilms = json.results
+
+                });
+        },
+
+        getWatchList: function(context) {
+            fetch("https://api.themoviedb.org/3/account/" + context.state.detailsAccount.id + "/watchlist/movies?api_key=" + context.state.apiKey + "&session_id=" + context.state.session.session_id + '&sort_by=created_at.asc')
+                .then(response => response.json())
+                .then(json => {
+                    context.state.watchList = json.results
+
+                });
+        },
+
+
+
     }
-
-
 })

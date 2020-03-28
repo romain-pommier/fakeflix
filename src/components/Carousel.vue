@@ -1,5 +1,5 @@
 <template>
-   <div v-if="datasCarousel != null" id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+   <div v-if="datasCarousel != null" id="carouselExampleControls" class="carousel slide " data-interval="2000" data-ride="carousel">
     <div class="carousel-inner">
         <div v-for="(data, index) in datasCarousel" v-bind:key="data.id" :class="{ 'active': index === 0 }" class="carousel-item ">
             <router-link :to="{ name: 'Show', params: { id: data.id }}">
@@ -9,11 +9,11 @@
             <router-view></router-view>
         </div>
     </div>
-    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <a class="carousel-control-prev"  href="#carouselExampleControls" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
     </a>
-    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <a class="carousel-control-next" ref="next" href="#carouselExampleControls" role="button" data-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
     </a>
@@ -34,7 +34,8 @@ export default {
   },
   components:{
   },
-  created:function(){
+  updated:function(){
+     this.$refs.next.click()
   },
 }
 </script>

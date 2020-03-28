@@ -45,9 +45,25 @@ export default {
     detailsAccount(){
       return this.$store.state.detailsAccount
     },
+    apiKey(){
+       return this.$store.state.apiKey
+    },
+    watchList(){
+      return this.$store.state.watchList
+    },
+    favorisFilms(){
+      return this.$store.state.favorisFilms
+    }
 
   },                                         
   created:function(){
+    
+  },
+  watch:{
+    detailsAccount:function(){
+      this.$store.dispatch('getFavorisMovies')
+      this.$store.dispatch('getWatchList')
+    },  
   },
   
   methods:{
@@ -55,7 +71,14 @@ export default {
       this.$router.push('/')
       this.formData = this.searchWord != "" ? this.searchWord : null
     },
-    
+    getFavorisMovies: function(){
+      fetch("https://api.themoviedb.org/3/account/"+ this.detailsAccount.id +"/favorite/movies?api_key="+ this.apiKey + "&session_id=" + this.session.session_id+ '&sort_by=created_at.asc')
+      .then(response => response.json())
+        .then(json => {
+          this.$store.commit('setFavorisFilms', json.results ) 
+          
+      });
+    },
   },
   components:{
     Login

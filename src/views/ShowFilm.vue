@@ -23,8 +23,10 @@
     </div>
    </div>
    <div class=" mt-5 d-flex justify-content-between"> 
-     <button @click="addFavorisFilm" class="btn btn-success" >Ajouter aux favoris</button>
-     <button class="btn btn-success">Ajouter à la liste "A voir"</button>
+     <button v-if="isFavorite == false" @click="setFavorisFilm" class="btn btn-success" >Ajouter aux favoris</button>
+     <button v-else @click="setFavorisFilm" class="btn btn-danger" >Supprimer des favoris</button>
+     <button v-if="isInWatchList == false" @click="setWatchList" class="btn btn-success">Ajouter à la liste "A voir"</button>
+     <button v-else @click="setWatchList" class="btn btn-danger">Supprimer de la liste "A voir"</button>
    </div>
  </div>
 </template>
@@ -43,7 +45,10 @@
         posterFilm: null,
         baFilmKey: null,
         youtubeUrl: "https://www.youtube.com/embed/",
-        defaultImg:"https://via.placeholder.com/300x450"
+        defaultImg:"https://via.placeholder.com/300x450",
+        isFavorite: false,
+        isInWatchList: false
+        
       }
     },
     
@@ -54,14 +59,20 @@
       vote:function(){
         return this.dataFilm.vote_average+"/10"
       },
-      detailsAccount(){
-        return this.$store.state.detailsAccount
+      favorisFilms(){
+        return this.$store.state.favorisFilms
       },
-      session(){
-        return this.$store.state.session
+      watchList(){
+        return this.$store.state.watchList
       },
-      apiKey(){
-        return this.$store.state.apiKey
+    },
+    watch:{
+      favorisFilms:function(){
+        this.getIsFavoriteFilm()
+        
+      },
+      watchList:function(){
+        this.getIsInWatchList()
       }
     },
     mixins:[getData],
@@ -81,11 +92,12 @@
             this.baFilmKey = null
           }
         })
-
-      this.getIsFavorite()
+        this.getIsFavoriteFilm()
+        this.getIsInWatchList()
+       
     },
     methods:{
-      addFavorisFilm: function(){
+      setFavorisFilm: function(){
         fetch("https://api.themoviedb.org/3/account/"+ this.detailsAccount.id +"/favorite?api_key="+ this.apiKey + "&session_id="+ this.session.session_id, {
           headers: {
             "Content-Type": "application/json"
@@ -94,20 +106,56 @@
           body:JSON.stringify({
             "media_type": "movie",
             "media_id": this.dataFilm.id ,
-            "favorite": true
+            "favorite": !this.isFavorite
           }),
         })
         .then(response => response.json())
           .then(json => {
-            this.favorisDatas = json
+            this.isFavorite = !this.isFavorite
         });
       },
-
-      getIsFavorite: function(){
-        this.favorisDatas.forEach(element => {
-          console.log(element)
-          
+      getIsFavoriteFilm: function(){
+        if(this.favorisFilms ){
+          for (let i = 0; i < this.favorisFilms.length; i++){
+            if (this.favorisFilms[i].id == this.movieId ){
+                this.isFavorite = true
+                return
+            }
+            else{
+              this.isFavorite = false
+            }
+          }
+        } 
+      },
+      setWatchList: function(){
+        fetch("https://api.themoviedb.org/3/account/"+ this.detailsAccount.id +"/watchlist?api_key="+ this.apiKey + "&session_id="+ this.session.session_id, {
+          headers: {
+            "Content-Type": "application/json"
+          },
+          method:"POST",
+          body:JSON.stringify({
+            "media_type": "movie",
+            "media_id": this.dataFilm.id ,
+            "watchlist": !this.isInWatchList
+          }),
+        })
+        .then(response => response.json())
+          .then(json => {
+            this.isInWatchList = !this.isInWatchList
         });
+      },
+      getIsInWatchList: function(){
+        if(this.watchList ){
+          for (let i = 0; i < this.watchList.length; i++){
+            if (this.watchList[i].id == this.movieId ){
+                this.isInWatchList = true
+                return
+            }
+            else{
+              this.isInWatchList = false
+            }
+          }
+        } 
       }
     }
   }

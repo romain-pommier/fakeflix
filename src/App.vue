@@ -66,7 +66,10 @@ export default {
     detailsAccount:function(){
       this.$store.dispatch('getFavorisMovies')
       this.$store.dispatch('getWatchList')
-    },  
+    }, 
+    searchWord:function(){
+      this.getSearchWord()
+    } 
 
   },
   

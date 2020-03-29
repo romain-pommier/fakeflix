@@ -1,4 +1,6 @@
 # fakeflix
+# Site
+ https://fake-flix.herokuapp.com/
 
 ## Project setup
 ```

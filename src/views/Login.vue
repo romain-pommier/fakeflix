@@ -5,10 +5,13 @@
         <input class="form-control" v-model="username" type="text" placeholder="Nom d'utilisateur" required>
       </div>
       <div class="form-group">
-        <input class="form-control" v-model="password" type="password" placeholder="Mot de passe" required>
+        <input class="form-control" v-model="password" @keyup.enter="getUserToken" type="password" placeholder="Mot de passe" required>
       </div>
       <div class="form-group">
-        <button class="btn btn-primary form-control" @click="login">Connecter</button>
+        <button class="btn btn-primary form-control"  @click="getUserToken">Connecter</button>
+      </div>
+      <div v-if="loginFalse == true" class="alert alert-danger" role="alert">
+        Les identifiants ne sont pas correct
       </div>
   </div>
 </template>
@@ -22,6 +25,7 @@ export default {
     return{
       username: null,
       password: null,
+      loginFalse: false
     }
   },
   computed:{
@@ -42,10 +46,6 @@ export default {
     this.getAuthenticationToken()
   },
   methods:{
-    login:function(){
-      this.getUserToken()
-      
-    },
 
     getAuthenticationToken: function(){
       fetch("https://api.themoviedb.org/3/authentication/token/new?api_key="+ this.apiKey)
@@ -55,8 +55,7 @@ export default {
                 });
     },
     getUserToken: function(){
-      
-      
+      this.getAuthenticationToken()
       fetch("https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key="+ this.apiKey,{
         headers: {
           "Content-Type": "application/json"
@@ -71,10 +70,11 @@ export default {
       .then(response => response.json())
       .then(json => {
         if(json.success){
+          this.loginFalse = false
           this.$store.commit('setUserData', json)
           this.getUserSession()
         } else {
-          console.log('out')
+          this.loginFalse = true
           }
       })
     },

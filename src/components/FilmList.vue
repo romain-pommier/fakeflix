@@ -1,12 +1,14 @@
 <template>
     <div  class=" d-flex flex-wrap  mt-5 ">
       <div class="container col-md-4 mb-4 col-sm-6" style="max-width:100%"  v-for="films in datasFilm" :key="films.id"   >
-        <router-link :to="{ name: 'Show', params: { id: films.id }}">
-            <img class="rounded mx-auto d-block" v-if="films.poster_path != null" :src="baseImg+films.poster_path" alt="">
-            <img class="rounded mx-auto d-block" v-else :src="defaultImg" alt="">
-            <h4 class="text-center">{{films.title}}</h4>
-        </router-link>
-        <router-view ></router-view> 
+        <transition name="movie">
+          <router-link :to="{ name: 'Show', params: { id: films.id }}">
+              <img class="rounded mx-auto d-block" v-if="films.poster_path != null" :src="baseImg+films.poster_path" alt="">
+              <img class="rounded mx-auto d-block" v-else :src="defaultImg" alt="">
+              <h4 class="text-center">{{films.title}}</h4>
+          </router-link>
+          <router-view ></router-view> 
+        </transition>
       </div>
     </div>
 </template>
@@ -32,6 +34,13 @@ export default {
 </script>
 
 <style scoped>
+
+.movie-enter-active, .movie-leave-active {
+  transition: opacity .5s;
+}
+.movie-enter, .movie-leave-to  {
+  opacity: 0;
+}
 
 
 </style>

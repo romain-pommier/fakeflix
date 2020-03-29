@@ -72,7 +72,10 @@ export default {
   
   methods:{
     getSearchWord:function(){
-      this.$router.push('/')
+      if(this.$router.currentRoute.name != "Home"){
+        this.$router.push({name: 'Home'})
+      }
+      
       this.formData = this.searchWord != "" ? this.searchWord : null
     },
     getFavorisMovies: function(){

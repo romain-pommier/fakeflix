@@ -8,6 +8,7 @@
       <div  v-if="searchWord != null" class=" mt-5" >
         <FilmList :datasFilm ="datas"  />
       </div>
+
     </div>
     <div v-else class="mt-5">
       <h3  class=" mx-auto text-center">Bienvenue sur FakeFlix </h3>
@@ -63,3 +64,11 @@ export default {
   }
 }
 </script>
+<style >
+.movie-enter-active, .movie-leave-active {
+  transition: opacity .5s;
+}
+.movie-enter, .movie-leave-to  {
+  opacity: 0;
+}
+</style>

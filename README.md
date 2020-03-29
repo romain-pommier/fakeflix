@@ -1,4 +1,4 @@
-# fakeflix
+# FakeFlix
 # Site
  https://fake-flix.herokuapp.com/
 

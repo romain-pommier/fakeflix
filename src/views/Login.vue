@@ -2,8 +2,8 @@
   <div class="mx-auto mt-5" style="width:30%">
     <h2>Veuillez vous identifier</h2>
 
-    <p>UserName: romain-p31</p>
-    <p>Password: 123456</p>
+    <p>UserName: testfakeflix</p>
+    <p>Password: fakeflix123456</p>
     <div class="form-group">
       <input
         class="form-control"

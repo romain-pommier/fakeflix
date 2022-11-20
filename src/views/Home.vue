@@ -37,7 +37,6 @@ export default {
   created: function() {
     this.defaultDatas = this.getData("discover/movie", "").then(data => {
       this.defaultDatas = data.results;
-      console.log(this.defaultDatas);
     });
     this.getDataWithWord();
   },

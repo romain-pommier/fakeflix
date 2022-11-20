@@ -28,20 +28,24 @@
 
       <router-view :searchWord="formData" />
     </div>
+    
     <div v-else>
       <login></login>
     </div>
     <footer class="sticky-bottom mt-5">
+      <div style="display:flex; justify-content:center"> <h1 class="p text-center pr-2">Fakeflix </h1>
       <p class="text-center ">
-        Fakeflix ©2020 - Powered by
+         ©2020 - Powered by
         <a target="_bank" href="https://www.themoviedb.org/">themoviedb.org</a>
-      </p>
-      <p class="text-center ">
+      </p></div>
+       <div><p class="text-center ">
         Developped by
         <a target="_bank" href="https://www.romain-pommier.com/"
           >romain-pommier.com</a
         >
-      </p>
+      </p></div>
+     
+     
     </footer>
   </div>
 </template>
@@ -130,10 +134,20 @@ export default {
   text-align: center;
   color: white;
 }
+footer{
+  /* display:flex; */
+}
 h1 {
   color: red;
   text-transform: capitalize;
   font-size: 100px;
+}
+.p{
+  color: white;
+  font-size: 18px;
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
 }
 
 #nav {
